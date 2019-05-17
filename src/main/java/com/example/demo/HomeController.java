@@ -20,11 +20,13 @@ public class HomeController {
         model.addAttribute("messages", messageRepository.findAll());
         return "list";
     }
+//    Add a platform to allow user to inout a message
     @GetMapping("/add")
     public String messageForm(Model model){
         model.addAttribute("message", new Message());
         return "messageform";
     }
+//    Take the input and store it
     @PostMapping("/process")
     public String processForm(@Valid Message message,
                               BindingResult result){
@@ -34,12 +36,14 @@ public class HomeController {
         messageRepository.save(message);
         return "redirect:/";
     }
+//    Creates a details model for user to lookup details of their posts
     @RequestMapping("/detail/{id}")
     public String showMessage(@PathVariable("id") long id, Model model)
     {
         model.addAttribute("message", messageRepository.findById(id).get());
         return "show";
     }
+//    User can make editions of their posts
     @RequestMapping("/update/{id}")
     public String updateMessage(@PathVariable("id") long id, Model model){
         model.addAttribute("message", messageRepository.findById(id).get());
